@@ -1,0 +1,14 @@
+{
+  "builds": {
+    "android": {
+      "preview": {
+        "distribution": "internal"
+      }
+    },
+    "ios": {
+      "preview": {
+        "distribution": "internal"
+      }
+    }
+  }
+}
