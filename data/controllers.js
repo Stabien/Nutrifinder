@@ -5,17 +5,17 @@ import * as SQLite from 'expo-sqlite';
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite');
   if (dbPath.exists)
-    return SQLite.openDatabase('database.sqlite');
+    return SQLite.openDatabase('database.db')
   else {
     await FileSystem.makeDirectoryAsync(
       FileSystem.documentDirectory + 'SQLite',
       { intermediates: true }
     );
     await FileSystem.downloadAsync(
-      Asset.fromModule(require('./database.sqlite')).uri,
-      FileSystem.documentDirectory + 'SQLite/database.sqlite'
+      Asset.fromModule(require('./database.db')).uri,
+      FileSystem.documentDirectory + 'SQLite/database.db'
     );
-    return SQLite.openDatabase('database.sqlite');
+    return SQLite.openDatabase('database.db');
   }
 }
 
@@ -23,27 +23,13 @@ export const getItemsFromResearch = async (research) => {
   const db = await openDatabase();
   const optimizedResearch = research.replace(/\s/g, '%');
   const accentRegex = /[\u0300-\u036f]/g;
-  let request;
-
-  if (accentRegex.test(optimizedResearch.normalize("NFD")))
-    request =
+  let request =
       "SELECT alim_nom_fr AS name, alim_code AS id, alim_grp_nom_fr AS categoryName, " +
       "alim_ssgrp_nom_fr AS typeName, alim_ssgrp_code AS typeId " +
       "FROM aliments " +
       "WHERE alim_nom_fr LIKE '" + optimizedResearch + "%' " +
       "OR alim_nom_fr LIKE '% " + optimizedResearch + "%' " +
       "GROUP BY alim_code, alim_nom_fr, alim_grp_nom_fr, alim_ssgrp_nom_fr, alim_ssgrp_code " +
-      "ORDER BY CASE WHEN alim_nom_fr LIKE '" + optimizedResearch + "%' " +
-      "then 0 else 1 end, Length(alim_nom_fr), alim_nom_fr"
-    ;
-  else
-    request =
-      "SELECT alim_nom_fr AS name, alim_code AS id, alim_grp_nom_fr AS categoryName, " +
-      "alim_ssgrp_nom_fr AS typeName, alim_ssgrp_code AS typeId, nom_sans_accents " +
-      "FROM aliments " +
-      "WHERE nom_sans_accents LIKE '" + optimizedResearch + "%' " +
-      "OR nom_sans_accents LIKE '% " + optimizedResearch + "%' " +
-      "GROUP BY alim_code, alim_nom_fr, alim_grp_nom_fr, alim_ssgrp_nom_fr, alim_ssgrp_code, nom_sans_accents " +
       "ORDER BY CASE WHEN alim_nom_fr LIKE '" + optimizedResearch + "%' " +
       "then 0 else 1 end, Length(alim_nom_fr), alim_nom_fr"
     ;
