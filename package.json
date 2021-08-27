@@ -16,6 +16,7 @@
     "browserslist": "^4.16.7",
     "eas-cli": "latest",
     "expo": "~40.0.0",
+    "expo-asset": "^8.3.3",
     "expo-file-system": "~9.3.0",
     "expo-font": "~8.4.0",
     "expo-sqlite": "~8.5.0",
