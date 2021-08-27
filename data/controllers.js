@@ -5,17 +5,17 @@ import * as SQLite from 'expo-sqlite';
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite');
   if (dbPath.exists)
-    return SQLite.openDatabase('database.db');
+    return SQLite.openDatabase('database.sqlite');
   else {
     await FileSystem.makeDirectoryAsync(
       FileSystem.documentDirectory + 'SQLite',
       { intermediates: true }
     );
     await FileSystem.downloadAsync(
-      Asset.fromModule(require('./database.db')).uri,
-      FileSystem.documentDirectory + 'SQLite/database.db'
+      Asset.fromModule(require('./database.sqlite')).uri,
+      FileSystem.documentDirectory + 'SQLite/database.sqlite'
     );
-    return SQLite.openDatabase('database.db');
+    return SQLite.openDatabase('database.sqlite');
   }
 }
 
