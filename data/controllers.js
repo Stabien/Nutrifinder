@@ -3,7 +3,7 @@ import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
-  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite');
+  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
   if (dbPath.exists)
     return SQLite.openDatabase('database.db')
   else {
@@ -40,7 +40,7 @@ export const getItemsFromResearch = async (research) => {
         request,
         [],
         (tx, res) => resolve(res.rows._array),
-        (tx, error) => reject(error)
+        (tx, error) => { alert(error); reject(error) }
       );
     });
   });
