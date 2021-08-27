@@ -12,7 +12,7 @@ const openDatabase = async () => {
       { intermediates: true }
     );
     await FileSystem.downloadAsync(
-      Asset.fromModule(require('./database.db')).uri,
+      Asset.fromModule(require('../assets/db/database.db')).uri,
       FileSystem.documentDirectory + 'SQLite/database.db'
     );
     return SQLite.openDatabase('database.db');
@@ -40,7 +40,7 @@ export const getItemsFromResearch = async (research) => {
         request,
         [],
         (tx, res) => resolve(res.rows._array),
-        (tx, error) => { alert(error); reject(error) }
+        (tx, error) => reject(error)
       );
     });
   });
