@@ -5,7 +5,7 @@ import * as SQLite from 'expo-sqlite';
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
   if (dbPath.exists)
-    return SQLite.openDatabase('//database.db')
+    return SQLite.openDatabase('database.db')
   else {
     await FileSystem.makeDirectoryAsync(
       FileSystem.documentDirectory + 'SQLite',
@@ -15,7 +15,7 @@ const openDatabase = async () => {
       Asset.fromModule(require('../assets/db/database.db')).uri,
       FileSystem.documentDirectory + 'SQLite/database.db'
     );
-    return SQLite.openDatabase('//database.db');
+    return SQLite.openDatabase('database.db');
   }
 }
 
