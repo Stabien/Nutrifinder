@@ -4,19 +4,11 @@ import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
-  if (dbPath.exists)
-    return SQLite.openDatabase('database.db')
-  else {
-    await FileSystem.makeDirectoryAsync(
-      FileSystem.documentDirectory + 'SQLite',
-      { intermediates: true }
-    );
-    await FileSystem.downloadAsync(
-      Asset.fromModule(require('../assets/db/database.db')).uri,
-      FileSystem.documentDirectory + 'SQLite/database.db'
-    );
-    return SQLite.openDatabase('database.db');
-  }
+  if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + "SQLite")).exists)
+      await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + "SQLite");
+  const [{ uri }] = await Asset.loadAsync(require("../assets/db/database.db"));
+  await FileSystem.downloadAsync(uri, FileSystem.documentDirectory + "SQLite/database.db");
+  return SQLite.openDatabase("//database.db");
 }
 
 export const getItemsFromResearch = async (research) => {
