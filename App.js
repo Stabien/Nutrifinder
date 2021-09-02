@@ -21,8 +21,10 @@ export default App = () => {
             name='Nutrifinder'
             component={Home}
             options={{
+              headerTitleAlign: 'center',
               headerStyle: {
                 backgroundColor: 'white',
+                elevation: 0,
                 shadowRadius: 0,
                 shadowOffset: {
                   height: 0,
@@ -45,8 +47,6 @@ export default App = () => {
               title: route.params.name,
               headerBackTitle: 'Retour',
               headerTitleContainerStyle: {
-                width: '50%',
-                alignItems: 'center'
               }
             })}
           />
