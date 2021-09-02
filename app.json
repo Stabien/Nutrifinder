@@ -18,7 +18,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.stabien.nutrifinder"
+      "bundleIdentifier": "com.stabien.nutrifinder",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
