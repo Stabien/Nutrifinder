@@ -4,7 +4,7 @@ import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
-  alert('Size : ' + result.size + '\n' + 'URI : ' + result.uri)
+  alert('Size : ' + dbPath.size + '\n' + 'URI : ' + dbPath.uri)
   if (dbPath.exists)
     return SQLite.openDatabase('database.db')
   else {
