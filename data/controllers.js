@@ -22,19 +22,11 @@ const openDatabase = async () => {
   }
 }
 
-FileSystem.getInfoAsync(`${FileSystem.documentDirectory}SQLite/database.db`)
-    .then(result => {
-      if (result.exists) {
-          db = SQLite.openDatabase('database.db');
-      } else {
-        FileSystem.downloadAsync(
-          Asset.fromModule(require('../assets/db/database.db')).uri,
-          `${FileSystem.documentDirectory}SQLite/database.db`
-        ).then(() => {
-          db = SQLite.openDatabase('database.db');
-        });
-      }
-    });
+FileSystem.downloadAsync(
+  Asset.fromModule(require('../assets/db/database.db')).uri,
+  `${FileSystem.documentDirectory}SQLite/database.db`
+)
+.then(() => db = SQLite.openDatabase('database.db'));
 
 export const getItemsFromResearch = async (research) => {
   const optimizedResearch = research.replace(/\s/g, '%');
