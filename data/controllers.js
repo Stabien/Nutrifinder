@@ -2,11 +2,9 @@ import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
-let db = null;
-
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
-  alert(dbPath.uri);
+  alert('Size : ' + result.size + '\n' + 'URI : ' + result.uri)
   if (dbPath.exists)
     return SQLite.openDatabase('database.db')
   else {
@@ -22,17 +20,8 @@ const openDatabase = async () => {
   }
 }
 
-FileSystem.downloadAsync(
-  Asset.fromModule(require('../assets/db/database.db')).uri,
-  `${FileSystem.documentDirectory}SQLite/database.db`
-)
-.then(() => FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db'))
-.then((result) => {
-  alert('Size : ' + result.size + '\n' + 'URI : ' + result.uri)
-  db = SQLite.openDatabase('database.db')
-});
-
 export const getItemsFromResearch = async (research) => {
+  const db = openDatabase();
   const optimizedResearch = research.replace(/\s/g, '%');
   const accentRegex = /[\u0300-\u036f]/g;
   let request;
@@ -73,6 +62,7 @@ export const getItemsFromResearch = async (research) => {
 }
 
 export const getItemDetail = async (id) => {
+  const db = openDatabase();
   const request = "SELECT * FROM aliments WHERE alim_code = " + id;
 
   return new Promise((resolve, reject) => {
