@@ -22,15 +22,10 @@ const openDatabase = async () => {
   }
 }
 
-FileSystem.makeDirectoryAsync(
-  FileSystem.documentDirectory + 'SQLite',
-  { intermediates: true }
-)
-.then(() =>
 FileSystem.downloadAsync(
   Asset.fromModule(require('../assets/db/database.db')).uri,
   `${FileSystem.documentDirectory}SQLite/database.db`
-))
+)
 .then(() => FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db'))
 .then((result) => {
   alert('Size : ' + result.size + '\n' + 'URI : ' + result.uri)
