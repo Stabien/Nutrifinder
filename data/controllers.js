@@ -4,7 +4,10 @@ import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
+  alert(Asset.fromModule(require('../assets/db/database.db')).uri)
   alert('Size : ' + dbPath.size + '\n' + 'URI : ' + dbPath.uri)
+  console.log(Asset.fromModule(require('../assets/db/database.db')))
+  console.log(FileSystem.cacheDirectory)
   if (dbPath.exists)
     return SQLite.openDatabase('database.db')
   else {
@@ -21,7 +24,7 @@ const openDatabase = async () => {
 }
 
 export const getItemsFromResearch = async (research) => {
-  const db = openDatabase();
+  const db = await openDatabase();
   const optimizedResearch = research.replace(/\s/g, '%');
   const accentRegex = /[\u0300-\u036f]/g;
   let request;
@@ -62,7 +65,7 @@ export const getItemsFromResearch = async (research) => {
 }
 
 export const getItemDetail = async (id) => {
-  const db = openDatabase();
+  const db = await openDatabase();
   const request = "SELECT * FROM aliments WHERE alim_code = " + id;
 
   return new Promise((resolve, reject) => {
