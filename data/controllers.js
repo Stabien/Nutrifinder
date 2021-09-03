@@ -22,11 +22,20 @@ const openDatabase = async () => {
   }
 }
 
+FileSystem.makeDirectoryAsync(
+  FileSystem.documentDirectory + 'SQLite',
+  { intermediates: true }
+)
+.then(() =>
 FileSystem.downloadAsync(
   Asset.fromModule(require('../assets/db/database.db')).uri,
   `${FileSystem.documentDirectory}SQLite/database.db`
-)
-.then(() => db = SQLite.openDatabase('database.db'));
+))
+.then(() => FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db'))
+.then((result) => {
+  alert('Size : ' + result.size + '\n' + 'URI : ' + result.uri)
+  db = SQLite.openDatabase('database.db')
+});
 
 export const getItemsFromResearch = async (research) => {
   const optimizedResearch = research.replace(/\s/g, '%');
