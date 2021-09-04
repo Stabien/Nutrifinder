@@ -4,7 +4,7 @@ import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/glitur.db');
-  console.log(Asset.fromModule(require('../assets/db/glitur.db')).uri)
+  console.log(Asset.fromModule(require('../assets/cereale_icon.png')).uri)
   alert('Size : ' + dbPath.size + '\n' + 'URI : ' + dbPath.uri)
   if (dbPath.exists)
     return SQLite.openDatabase('glitur.db')
