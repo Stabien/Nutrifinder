@@ -1,4 +1,4 @@
-import { Asset } from 'expo-asset';
+import { Asset } from 'react-native-unimodules';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
