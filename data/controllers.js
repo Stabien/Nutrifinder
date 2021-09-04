@@ -1,4 +1,4 @@
-import { Asset } from 'expo';
+import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
