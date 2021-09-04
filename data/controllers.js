@@ -1,23 +1,23 @@
-import { Asset } from 'expo-asset';
+import { Asset } from 'expo';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
-  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
-  alert(Asset.fromModule(require('../assets/db/database.db')).uri)
+  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/glitur.db');
+  console.log(Asset.fromModule(require('../assets/db/glitur.db')).uri)
   alert('Size : ' + dbPath.size + '\n' + 'URI : ' + dbPath.uri)
   if (dbPath.exists)
-    return SQLite.openDatabase('database.db')
+    return SQLite.openDatabase('glitur.db')
   else {
     await FileSystem.makeDirectoryAsync(
       FileSystem.documentDirectory + 'SQLite',
       { intermediates: true }
     );
     await FileSystem.downloadAsync(
-      Asset.fromModule(require('../assets/db/database.db')).uri,
-      FileSystem.documentDirectory + 'SQLite/database.db'
+      Asset.fromModule(require('../assets/db/glitur.db')).uri,
+      FileSystem.documentDirectory + 'SQLite/glitur.db'
     );
-    return SQLite.openDatabase('database.db');
+    return SQLite.openDatabase('glitur.db');
   }
 }
 
