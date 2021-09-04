@@ -6,8 +6,6 @@ const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/database.db');
   alert(Asset.fromModule(require('../assets/db/database.db')).uri)
   alert('Size : ' + dbPath.size + '\n' + 'URI : ' + dbPath.uri)
-  console.log(Asset.fromModule(require('../assets/db/database.db')))
-  console.log(FileSystem.cacheDirectory)
   if (dbPath.exists)
     return SQLite.openDatabase('database.db')
   else {
