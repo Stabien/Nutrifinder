@@ -3,20 +3,20 @@ import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
-  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/nutrifinder.db');
-  alert(Asset.fromModule(require('../assets/db/nutrifinder.db')).uri)
+  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/data.db');
+  alert(Asset.fromModule(require('../assets/db/data.db')).uri)
   if (dbPath.exists)
-    return SQLite.openDatabase('nutrifinder.db')
+    return SQLite.openDatabase('data.db')
   else {
     await FileSystem.makeDirectoryAsync(
       FileSystem.documentDirectory + 'SQLite',
       { intermediates: true }
     );
     await FileSystem.downloadAsync(
-      Asset.fromModule(require('../assets/db/nutrifinder.db')).uri,
-      FileSystem.documentDirectory + 'SQLite/nutrifinder.db'
+      Asset.fromModule(require('../assets/db/data.db')).uri,
+      FileSystem.documentDirectory + 'SQLite/data.db'
     );
-    return SQLite.openDatabase('nutrifinder.db');
+    return SQLite.openDatabase('data.db');
   }
 }
 
