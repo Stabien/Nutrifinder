@@ -123,7 +123,7 @@ export default ItemDetail = ({ route }) => {
       <View style={{ padding: 20, paddingBottom: 15 }}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <Image source={getIcon(route.params.typeId)} style={styles.icon}/>
-          <View style={{ marginLeft: 10, marginRight: 30 }}>
+          <View style={{ marginLeft: 10, width: '80%' }}>
             <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{route.params.name}</Text>
             <Text style={{ fontSize: 20, color: '#AFAFAF' }}>{route.params.typeName}</Text>
           </View>

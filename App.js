@@ -47,6 +47,7 @@ export default App = () => {
               title: route.params.name,
               headerBackTitle: 'Retour',
               headerTitleContainerStyle: {
+                width: '50%'
               }
             })}
           />
