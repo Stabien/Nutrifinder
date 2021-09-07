@@ -23,8 +23,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.stabien.nutrifinder",
-      "buildNumber": "3",
-      "isRemoteJSEnabled": false
+      "buildNumber": "5"
     },
     "android": {
       "adaptiveIcon": {

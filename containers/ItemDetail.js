@@ -7,35 +7,48 @@ import { getItemDetail } from '../data/controllers.js';
 
 export default ItemDetail = ({ route }) => {
   const [itemContent, setItemContent] = useState('');
-  const g = ['lipides', 'glucides', 'proteines', 'fibres', 'sucre', 'ags'];
+  const g = [
+    'lipides',
+    'glucides',
+    'proteines',
+    'fibres',
+    'sucre',
+    'ags'
+  ];
   const mg = [
-    'sel', 'calcium', 'chlorure', 'cuivre', 'fer', 'magnesium',
-    'manganese', 'phosphore', 'potassium', 'selenium', 'sodium',
-    'zinc', 'vitamineC',  'vitamineE', 'vitamineB1', 'vitamineB2',
-    'vitamineB3', 'vitamineB5', 'vitamineB6'
+    'sel',
+    'calcium',
+    'chlorure',
+    'cuivre',
+    'fer',
+    'magnesium',
+    'manganese',
+    'phosphore',
+    'potassium',
+    'selenium',
+    'sodium',
+    'zinc',
+    'vitamineC',
+    'vitamineE',
+    'vitamineB1',
+    'vitamineB2',
+    'vitamineB3',
+    'vitamineB5',
+    'vitamineB6'
   ];
   const µg = [
-    'iode', 'vitamineA', 'vitamineD', 'vitamineK1', 'vitamineK2',
-    'vitamineB9', 'vitamineB12'
+    'iode',
+    'vitamineA',
+    'vitamineD',
+    'vitamineK1',
+    'vitamineK2',
+    'vitamineB9',
+    'vitamineB12'
   ];
-  const ml = ['alcool', 'eau'];
-
-  const setUnitOfMeasure = (item) => {
-    Object.keys(item).map((keyName, index) => {
-      if (item[keyName] == 'null')
-        item[keyName] = '-';
-      if (g.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
-        item[keyName] += 'g';
-      if (mg.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
-        item[keyName] += 'mg';
-      if (µg.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
-        item[keyName] += 'µg';
-      if (ml.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
-        item[keyName] += 'ml';
-    });
-    return item;
-  }
-
+  const ml = [
+    'alcool',
+    'eau'
+  ];
   const energy = {
     'KJ': itemContent.kj,
     'Kcal': itemContent.kcal
@@ -81,18 +94,33 @@ export default ItemDetail = ({ route }) => {
     'Zinc': itemContent.zinc
   };
 
+  const setUnitOfMeasure = (item) => {
+    Object.keys(item).map((keyName, index) => {
+      if (item[keyName] == 'null')
+        item[keyName] = '-';
+      if (g.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
+        item[keyName] += 'g';
+      if (mg.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
+        item[keyName] += 'mg';
+      if (µg.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
+        item[keyName] += 'µg';
+      if (ml.includes(keyName) && item[keyName] != '-' && item[keyName] != 'traces')
+        item[keyName] += 'ml';
+    });
+    return item;
+  }
+
   useEffect(() => {
     getItemDetail(route.params.id)
       .then(response => {
         response = setUnitOfMeasure(response);
         setItemContent(response);
-      })
-      .catch(error => console.log(error));
+      });
   }, []);
 
   return (
     <ScrollView style={{ backgroundColor: '#F7F8FA' }}>
-      <View style={{ padding: 20 }}>
+      <View style={{ padding: 20, paddingBottom: 15 }}>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
           <Image source={getIcon(route.params.typeId)} style={styles.icon}/>
           <View style={{ marginLeft: 10, marginRight: 30 }}>
@@ -104,6 +132,7 @@ export default ItemDetail = ({ route }) => {
         <NutrientGroup title="Calories" data={calories}/>
         <NutrientGroup title="Sels et mineraux" data={saltAndMinerals}/>
         <NutrientGroup title="Vitamines" data={vitamines}/>
+        <Text style={styles.sources}>Sources : ciqual.anses.fr</Text>
       </View>
     </ScrollView>
   );
@@ -115,5 +144,13 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 'auto',
     marginBottom: 'auto'
+  },
+  sources: {
+    color: '#8F8F8F',
+    fontSize: 16,
+    marginTop: 12,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontWeight: '500'
   }
 });

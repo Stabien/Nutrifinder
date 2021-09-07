@@ -1,10 +1,9 @@
-import { Asset } from 'react-native-unimodules';
+import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
 const openDatabase = async () => {
   const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/data.db');
-  alert(Asset.fromModule(require('../assets/db/data.db')).uri)
   if (dbPath.exists)
     return SQLite.openDatabase('data.db')
   else {
