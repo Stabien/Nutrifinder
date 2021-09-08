@@ -2,25 +2,25 @@ import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
-const openDatabase = async () => {
-  const dbPath = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/data.db');
-  if (dbPath.exists)
-    return SQLite.openDatabase('data.db')
-  else {
-    await FileSystem.makeDirectoryAsync(
-      FileSystem.documentDirectory + 'SQLite',
-      { intermediates: true }
-    );
-    await FileSystem.downloadAsync(
-      Asset.fromModule(require('../assets/db/data.db')).uri,
-      FileSystem.documentDirectory + 'SQLite/data.db'
-    );
-    return SQLite.openDatabase('data.db');
-  }
-}
+// Download database if not already exists
+FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/data.db')
+  .then(dbPath => {
+    if (!dbPath.exists) {
+      FileSystem.makeDirectoryAsync(
+        FileSystem.documentDirectory + 'SQLite',
+        { intermediates: true }
+      )
+      .then(() => {
+        FileSystem.downloadAsync(
+          Asset.fromModule(require('../assets/db/data.db')).uri,
+          FileSystem.documentDirectory + 'SQLite/data.db'
+        );
+      })
+    }
+});
 
 export const getItemsFromResearch = async (research) => {
-  const db = await openDatabase();
+  const db = SQLite.openDatabase('data.db');
   const optimizedResearch = research.replace(/\s/g, '%');
   const accentRegex = /[\u0300-\u036f]/g;
   let request;
@@ -61,7 +61,7 @@ export const getItemsFromResearch = async (research) => {
 }
 
 export const getItemDetail = async (id) => {
-  const db = await openDatabase();
+  const db = SQLite.openDatabase('data.db');
   const request = "SELECT * FROM aliments WHERE alim_code = " + id;
 
   return new Promise((resolve, reject) => {
